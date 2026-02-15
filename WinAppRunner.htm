@@ -391,5 +391,33 @@
 		</div>
 
 		<div class="gui_goback"></div>
+		<script>
+window.addEventListener("load", function () {
+
+    // путь к твоему zip
+    const zipUrl = "demos/StartPND.zip";
+
+    fetch(zipUrl)
+    .then(response => response.arrayBuffer())
+    .then(buffer => {
+
+        // создаём fake File объект
+        const file = new File([buffer], "StartPND.zip");
+
+        // эмулируем загрузку файла
+        Module.FS_createDataFile("/", "StartPND.zip", new Uint8Array(buffer), true, true);
+
+        // запускаем exe
+        if (typeof start === "function") {
+            start(file);
+        }
+
+    })
+    .catch(err => console.error(err));
+
+});
+</script>
+
+
 	</body>
 </html>
